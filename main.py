@@ -1,5 +1,4 @@
 from selenium import webdriver
-import time
 from driver import Driver
 from data_manager import DataManager
 from mapper import Mapper
@@ -14,10 +13,12 @@ xpath_field = {
     'Phone Number': 'labelPhone'
 }
 
-driver = Driver(webdriver.Chrome(), 'https://rpachallenge.com/?lang=EN')
-driver.download_data()
-path = DataManager.get_file_path()
-data = DataManager.extract_data(path)
+url = 'https://rpachallenge.com/?lang=EN'
+filename = 'data.xlsx'
+download_url = 'https://rpachallenge.com/assets/downloadFiles/challenge.xlsx'
+
+driver = Driver(webdriver.Chrome(), url)
+DataManager.download_file(download_url, filename)
+data = DataManager.extract_data(filename)
 mapper = Mapper(xpath_field)
 driver.upload_data(data, mapper)
-time.sleep(5)

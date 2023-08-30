@@ -1,26 +1,18 @@
 import openpyxl
-import os
+import requests
 
 
 class DataManager:
     @staticmethod
-    def get_file_path():
-        directory_path = 'C:/Users/User/Downloads'
-        most_recent_file = None
-        most_recent_time = 0
+    def download_file(url: str, filename: str):
+        request = requests.get(url)
 
-        for entry in os.scandir(directory_path):
-            if entry.is_file():
-                mod_time = entry.stat().st_mtime_ns
-                if mod_time > most_recent_time:
-                    most_recent_file = entry.name
-                    most_recent_time = mod_time
-
-        return directory_path + '/' + most_recent_file
+        with open(filename, 'wb') as output:
+            output.write(request.content)
 
     @staticmethod
-    def extract_data(path):
-        dataframe = openpyxl.load_workbook(path)
+    def extract_data(filename):
+        dataframe = openpyxl.load_workbook(filename)
         dataframe1 = dataframe.active
 
         data_dict = {}

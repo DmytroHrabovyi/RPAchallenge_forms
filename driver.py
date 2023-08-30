@@ -1,5 +1,4 @@
 from selenium.webdriver.common.by import By
-import time
 from mapper import Mapper
 
 
@@ -8,11 +7,6 @@ class Driver:
         self.driver = driver
         self.driver.get(website)
         self.driver.maximize_window()
-
-    def download_data(self):
-        download_link = self.driver.find_element(By.XPATH, '/html/body/app-root/div[2]/app-rpa1/div/div[1]/div[6]/a')
-        download_link.click()
-        time.sleep(5)
 
     def upload_data(self, data: dict, mapper: Mapper):
         start_button = self.driver.find_element(By.XPATH, '/html/body/app-root/div[2]/app-rpa1/div/div[1]/div[6]/button')
